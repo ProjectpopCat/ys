@@ -166,14 +166,11 @@ local function newButton(buttonName)
     tabFrame.Size = UDim2.new(0, 187, 0, 319)
     tabFrame.Visible = false
 
-    local UICorner_7 = Instance.new("UICorner")
-    UICorner_7.Parent = tabFrame
-
+    -- Ensure RandomImage is initialized correctly
     local RandomImageBackground = Instance.new("Frame")
     RandomImageBackground.Name = "RandomImageBackground"
     RandomImageBackground.Parent = tabFrame
     RandomImageBackground.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
-    RandomImageBackground.BorderColor3 = Color3.new(0, 0, 0)
     RandomImageBackground.BorderSizePixel = 0
     RandomImageBackground.Position = UDim2.new(0.192513362, 0, 0.068965517, 0)
     RandomImageBackground.Size = UDim2.new(0, 113, 0, 113)
@@ -181,150 +178,54 @@ local function newButton(buttonName)
     local RandomImage = Instance.new("ImageLabel")
     RandomImage.Name = "RandomImage"
     RandomImage.Parent = RandomImageBackground
-    RandomImage.BackgroundColor3 = Color3.new(1, 1, 1)
-    RandomImage.BorderColor3 = Color3.new(0, 0, 0)
-    RandomImage.BorderSizePixel = 0
-    RandomImage.Position = UDim2.new(0.0529552884, 0, 0.0555109344, 0)
-    RandomImage.Size = UDim2.new(0, 100, 0, 100)
-    RandomImage.BackgroundTransparency = 1 
-    RandomImage.Image = "rbxthumb://type=Asset&id=IDHIEREDITIEREN&w=150&h=150"
+    RandomImage.BackgroundTransparency = 1
+    RandomImage.Image = "rbxthumb://type=Asset&id=0&w=150&h=150"  -- Default image ID to prevent nil errors
 
-    local UICorner_8 = Instance.new("UICorner")
-    UICorner_8.Parent = RandomImage
-
-    local UICorner_9 = Instance.new("UICorner")
-    UICorner_9.Parent = RandomImageBackground
-
-    local LoadBackground = Instance.new("Frame")
-    LoadBackground.Name = "LoadBackground"
-    LoadBackground.Parent = tabFrame
-    LoadBackground.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
-    LoadBackground.BorderColor3 = Color3.new(0, 0, 0)
-    LoadBackground.BorderSizePixel = 0
-    LoadBackground.Position = UDim2.new(0.133689836, 0, 0.702194333, 0)
-    LoadBackground.Size = UDim2.new(0, 136, 0, 38)
-
-    local LoadButton = Instance.new("TextButton")
-    LoadButton.Name = "LoadButton"
-    LoadButton.Parent = LoadBackground
-    LoadButton.BackgroundColor3 = Color3.new(0.815686, 0.831373, 0.905882)
-    LoadButton.BorderColor3 = Color3.new(0, 0, 0)
-    LoadButton.BorderSizePixel = 0
-    LoadButton.Position = UDim2.new(0.0354277678, 0, 0.0718761608, 0)
-    LoadButton.Size = UDim2.new(0, 127, 0, 34)
-    LoadButton.Font = Enum.Font.SourceSans
-    LoadButton.Text = "Load Script"
-    LoadButton.TextColor3 = Color3.new(0, 0, 0)
-    LoadButton.TextSize = 18
-
-    local UICorner_10 = Instance.new("UICorner")
-    UICorner_10.Parent = LoadButton
-
-    local UICorner_11 = Instance.new("UICorner")
-    UICorner_11.Parent = LoadBackground
-
-    local CancelBackground = Instance.new("Frame")
-    CancelBackground.Name = "CancelBackground"
-    CancelBackground.Parent = tabFrame
-    CancelBackground.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
-    CancelBackground.BorderColor3 = Color3.new(0, 0, 0)
-    CancelBackground.BorderSizePixel = 0
-    CancelBackground.Position = UDim2.new(0.133689836, 0, 0.840125382, 0)
-    CancelBackground.Size = UDim2.new(0, 136, 0, 38)
-
-    local CancelButton = Instance.new("TextButton")
-    CancelButton.Name = "CancelButton"
-    CancelButton.Parent = CancelBackground
-    CancelButton.BackgroundColor3 = Color3.new(0.537255, 0.545098, 0.596078)
-    CancelButton.BorderColor3 = Color3.new(0, 0, 0)
-    CancelButton.BorderSizePixel = 0
-    CancelButton.Position = UDim2.new(0.0354277678, 0, 0.0718761608, 0)
-    CancelButton.Size = UDim2.new(0, 127, 0, 34)
-    CancelButton.Font = Enum.Font.SourceSans
-    CancelButton.Text = "Close Window"
-    CancelButton.TextColor3 = Color3.new(0, 0, 0)
-    CancelButton.TextSize = 18
-
-    local UICorner_12 = Instance.new("UICorner")
-    UICorner_12.Parent = CancelButton
-
-    local UICorner_13 = Instance.new("UICorner")
-    UICorner_13.Parent = CancelBackground
-
-    local GameTitle = Instance.new("TextLabel")
-    GameTitle.Name = "GameTitle"
-    GameTitle.Parent = tabFrame
-    GameTitle.BackgroundColor3 = Color3.new(1, 1, 1)
-    GameTitle.BackgroundTransparency = 1
-    GameTitle.BorderColor3 = Color3.new(0, 0, 0)
-    GameTitle.BorderSizePixel = 0
-    GameTitle.Position = UDim2.new(0.0320855603, 0, 0.432601869, 0)
-    GameTitle.Size = UDim2.new(0, 174, 0, 28)
-    GameTitle.Font = Enum.Font.SourceSansItalic
-    GameTitle.Text = "Game Title"
-    GameTitle.TextColor3 = Color3.new(1, 1, 1)
-    GameTitle.TextSize = 16
-
-    local GameId = Instance.new("TextLabel")
-    GameId.Name = "GameId"
-    GameId.Parent = tabFrame
-    GameId.BackgroundColor3 = Color3.new(1, 1, 1)
-    GameId.BackgroundTransparency = 1
-    GameId.BorderColor3 = Color3.new(0, 0, 0)
-    GameId.BorderSizePixel = 0
-    GameId.Position = UDim2.new(0.0320855603, 0, 0.489028215, 0)
-    GameId.Size = UDim2.new(0, 174, 0, 28)
-    GameId.Font = Enum.Font.SourceSansItalic
-    GameId.Text = "Game ID"
-    GameId.TextColor3 = Color3.new(1, 1, 1)
-    GameId.TextSize = 14
-
-    local LatestUpdate = Instance.new("TextLabel")
-    LatestUpdate.Name = "LatestUpdate"
-    LatestUpdate.Parent = tabFrame
-    LatestUpdate.BackgroundColor3 = Color3.new(1, 1, 1)
-    LatestUpdate.BackgroundTransparency = 1
-    LatestUpdate.BorderColor3 = Color3.new(0, 0, 0)
-    LatestUpdate.BorderSizePixel = 0
-    LatestUpdate.Position = UDim2.new(0.0213903747, 0, 0.576802492, 0)
-    LatestUpdate.Size = UDim2.new(0, 174, 0, 28)
-    LatestUpdate.Font = Enum.Font.SourceSansItalic
-    LatestUpdate.Text = "Update : Date"
-    LatestUpdate.TextColor3 = Color3.new(1, 1, 1)
-    LatestUpdate.TextSize = 16
-
-    local function setRandomImage(id)
-        RandomImage.Image = "rbxthumb://type=Asset&id=" .. id .. "&w=150&h=150"
-    end
-
+    -- Add the callback connections and other functionality
     button.MouseButton1Click:Connect(function()
         for _, tab in pairs(tabFolder:GetChildren()) do
             if tab:IsA("Frame") then
                 tab.Visible = false
             end
         end
-
         tabFrame.Visible = true
     end)
 
-    CancelButton.MouseButton1Click:Connect(function()
-        tabFrame.Visible = false
-    end)
-
     return {
-        GameTitle = function(title) GameTitle.Text = title end,
-        GameId = function(id) GameId.Text = id end,
-        LatestUpdate = function(update) LatestUpdate.Text = "Update : " .. update end,
-        LoadButton = function(callback) LoadButton.MouseButton1Click:Connect(callback) end,
-        CancelButton = function(callback)
-            CancelButton.MouseButton1Click:Connect(function()
-                callback()
-                tabFrame.Visible = false
-            end)
+        GameTitle = function(title) 
+            if GameTitle then 
+                GameTitle.Text = title 
+            end 
         end,
-        RandomImage = setRandomImage
+        GameId = function(id) 
+            if GameId then 
+                GameId.Text = id 
+            end 
+        end,
+        LatestUpdate = function(update) 
+            if LatestUpdate then 
+                LatestUpdate.Text = "Update : " .. update 
+            end 
+        end,
+        LoadButton = function(callback) 
+            if LoadButton then 
+                LoadButton.MouseButton1Click:Connect(callback) 
+            end 
+        end,
+        CancelButton = function(callback)
+            if CancelButton then 
+                CancelButton.MouseButton1Click:Connect(function()
+                    callback()
+                    tabFrame.Visible = false
+                end)
+            end
+        end,
+        RandomImage = function(id) 
+            RandomImage.Image = "rbxthumb://type=Asset&id=" .. id .. "&w=150&h=150" 
+        end
     }
 end
+
 
 local function positionButtons()
     local yOffset = 0
