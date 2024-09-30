@@ -139,7 +139,7 @@ tabFolder.Parent = Main
 local function newButton(buttonName)
     local button = Instance.new("TextButton")
     button.Name = buttonName
-    button.Parent = GamesHolder  -- Sicherstellen, dass GamesHolder definiert ist
+    button.Parent = GamesHolder
     button.BackgroundColor3 = Color3.new(0.815686, 0.831373, 0.905882)
     button.BorderColor3 = Color3.new(0, 0, 0)
     button.BorderSizePixel = 0
@@ -153,12 +153,12 @@ local function newButton(buttonName)
     UICorner.Parent = button
 
     local buttonCount = #GamesHolder:GetChildren() - 1
-    button.Position = UDim2.new(0, 0, 0, buttonCount * (button.Size.Y.Offset + buttonSpacing))
-    GamesHolder.CanvasSize = UDim2.new(0, 0, 0, (buttonCount + 1) * (button.Size.Y.Offset + buttonSpacing))
+    button.Position = UDim2.new(0, 0, 0, buttonCount * (button.Size.Y.Offset + (buttonSpacing * 37)))
+    GamesHolder.CanvasSize = UDim2.new(0, 0, 0, (buttonCount + 1) * (button.Size.Y.Offset + (buttonSpacing * 37)))
 
     local tabFrame = Instance.new("Frame")
     tabFrame.Name = buttonName
-    tabFrame.Parent = tabFolder  -- Sicherstellen, dass tabFolder definiert ist
+    tabFrame.Parent = tabFolder
     tabFrame.AnchorPoint = Vector2.new(0.5, 0.5)
     tabFrame.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
     tabFrame.BorderSizePixel = 0
@@ -169,7 +169,6 @@ local function newButton(buttonName)
     local UICorner_7 = Instance.new("UICorner")
     UICorner_7.Parent = tabFrame
 
-    -- Erstellen des RandomImageBackground
     local RandomImageBackground = Instance.new("Frame")
     RandomImageBackground.Name = "RandomImageBackground"
     RandomImageBackground.Parent = tabFrame
@@ -193,7 +192,9 @@ local function newButton(buttonName)
     local UICorner_8 = Instance.new("UICorner")
     UICorner_8.Parent = RandomImage
 
-    -- Erstellen der Load- und Cancel-Buttons
+    local UICorner_9 = Instance.new("UICorner")
+    UICorner_9.Parent = RandomImageBackground
+
     local LoadBackground = Instance.new("Frame")
     LoadBackground.Name = "LoadBackground"
     LoadBackground.Parent = tabFrame
@@ -218,6 +219,9 @@ local function newButton(buttonName)
 
     local UICorner_10 = Instance.new("UICorner")
     UICorner_10.Parent = LoadButton
+
+    local UICorner_11 = Instance.new("UICorner")
+    UICorner_11.Parent = LoadBackground
 
     local CancelBackground = Instance.new("Frame")
     CancelBackground.Name = "CancelBackground"
@@ -244,7 +248,9 @@ local function newButton(buttonName)
     local UICorner_12 = Instance.new("UICorner")
     UICorner_12.Parent = CancelButton
 
-    -- Erstellen von Labels für Spieltitel, ID und letzte Aktualisierung
+    local UICorner_13 = Instance.new("UICorner")
+    UICorner_13.Parent = CancelBackground
+
     local GameTitle = Instance.new("TextLabel")
     GameTitle.Name = "GameTitle"
     GameTitle.Parent = tabFrame
@@ -297,6 +303,7 @@ local function newButton(buttonName)
                 tab.Visible = false
             end
         end
+
         tabFrame.Visible = true
     end)
 
@@ -304,7 +311,6 @@ local function newButton(buttonName)
         tabFrame.Visible = false
     end)
 
-    -- Rückgabe einer Tabelle von Funktionen, um mit den erstellten Elementen zu interagieren
     return {
         GameTitle = function(title) GameTitle.Text = title end,
         GameId = function(id) GameId.Text = id end,
@@ -316,15 +322,23 @@ local function newButton(buttonName)
                 tabFrame.Visible = false
             end)
         end,
-        RandomImage = setRandomImage,
-        ButtonInstance = button  -- Rückgabe der Button-Instanz, falls benötigt
+        RandomImage = setRandomImage
     }
 end
 
-return {
-    newButton = newButton,
-}
+local function positionButtons()
+    local yOffset = 0
+    local buttonSpacing = 0.1
 
+    for _, button in pairs(GamesHolder:GetChildren()) do
+        if button:IsA("TextButton") then
+            button.Position = UDim2.new(0, 0, 0, yOffset)
+            yOffset = yOffset + button.Size.Y.Offset + (buttonSpacing * 37)
+        end
+    end
+
+    GamesHolder.CanvasSize = UDim2.new(0, 0, 0, yOffset)
+end
 
 local SearchBox = Instance.new("Frame")
 local SearchBar = Instance.new("TextBox")
@@ -540,7 +554,3 @@ local function UpdateCline2(text)
         Cline2.Text = text
     end
 end
-
-local UICorner_14 = Instance.new("UICorner")
-UICorner_14.Parent = Main
-positionButtons()
