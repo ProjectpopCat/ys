@@ -555,56 +555,6 @@ local function UpdateCline2(text)
     end
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function calculateDaysDifference(date1, date2)
-    local diff = os.difftime(os.time(date2), os.time(date1))
-    return math.floor(diff / (60 * 60 * 24))
-end
-
-function getCurrentDate()
-    return os.date("*t")
-end
-
-function formatDate(dateTable)
-    return string.format("%02d/%02d/%d", dateTable.month, dateTable.day, dateTable.year)
-end
-
-function updateLatestUpdate(startDate)
-    local currentDate = getCurrentDate()
-    local daysDifference = calculateDaysDifference(startDate, currentDate)
-
-    if daysDifference == 0 then
-        return "Today"
-    elseif daysDifference == 1 then
-        return "1 day ago"
-    else
-        return tostring(daysDifference) .. " days ago"
-    end
-end
-
 local UICorner_14 = Instance.new("UICorner")
 UICorner_14.Parent = Main
 positionButtons()
