@@ -325,20 +325,6 @@ return {
     newButton = newButton,
 }
 
-local function positionButtons()
-    local yOffset = 0
-    local buttonSpacing = 0.1
-
-    for _, button in pairs(GamesHolder:GetChildren()) do
-        if button:IsA("TextButton") then
-            button.Position = UDim2.new(0, 0, 0, yOffset)
-            yOffset = yOffset + button.Size.Y.Offset + (buttonSpacing * 37)
-        end
-    end
-
-    GamesHolder.CanvasSize = UDim2.new(0, 0, 0, yOffset)
-end
-
 local SearchBox = Instance.new("Frame")
 local SearchBar = Instance.new("TextBox")
 local UICorner_6 = Instance.new("UICorner")
