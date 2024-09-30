@@ -3,6 +3,7 @@ if ys_search_window then
     ys_search_window:Destroy()
 end
 
+
 local lib = {RainbowColorValue = 0, HueSelectionPosition = 0}
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
@@ -14,18 +15,22 @@ ui.Name = "YS_Search_Window"
 ui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-coroutine.wrap(function()
-    while wait() do
-        lib.RainbowColorValue = lib.RainbowColorValue + 1 / 255
-        lib.HueSelectionPosition = lib.HueSelectionPosition + 1
-        if lib.RainbowColorValue >= 1 then
-            lib.RainbowColorValue = 0
-        end
-        if lib.HueSelectionPosition == 80 then
-            lib.HueSelectionPosition = 0
+coroutine.wrap(
+    function()
+        while wait() do
+            lib.RainbowColorValue = lib.RainbowColorValue + 1 / 255
+            lib.HueSelectionPosition = lib.HueSelectionPosition + 1
+
+            if lib.RainbowColorValue >= 1 then
+                lib.RainbowColorValue = 0
+            end
+
+            if lib.HueSelectionPosition == 80 then
+                lib.HueSelectionPosition = 0
+            end
         end
     end
-end)()
+)()
 
 local Main = Instance.new("Frame")
 Main.Name = "Main"
@@ -68,8 +73,8 @@ local function MakeDraggable(DragFrame, object)
     local DragStart = nil
     local StartPosition = nil
 
-    local function Update(inputPosition)
-        local Delta = inputPosition - DragStart
+    local function Update(input)
+        local Delta = input.Position - DragStart
         local NewPosition = UDim2.new(
             StartPosition.X.Scale,
             StartPosition.X.Offset + Delta.X,
@@ -79,22 +84,17 @@ local function MakeDraggable(DragFrame, object)
         object.Position = NewPosition
     end
 
-    -- InputBegan for mouse and touch
-    local function onInputBegan(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or 
-           input.UserInputType == Enum.UserInputType.Touch then
+    DragFrame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
             Dragging = true
             DragStart = input.Position
             StartPosition = object.Position
 
-            -- Connect InputChanged immediately to ensure responsive dragging
-            local function onInputChanged(movementInput)
-                if Dragging then
-                    Update(movementInput.Position)
+            UserInputService.InputChanged:Connect(function(movementInput)
+                if Dragging and movementInput.UserInputType == Enum.UserInputType.MouseMovement then
+                    Update(movementInput)
                 end
-            end
-
-            UserInputService.InputChanged:Connect(onInputChanged)
+            end)
 
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
@@ -102,14 +102,10 @@ local function MakeDraggable(DragFrame, object)
                 end
             end)
         end
-    end
-
-    -- Connect InputBegan to DragFrame for mouse and touch input
-    DragFrame.InputBegan:Connect(onInputBegan)
+    end)
 end
+
 MakeDraggable(Main, Main)
-
-
 
 local GamesHolder = Instance.new("ScrollingFrame")
 local UICorner_2 = Instance.new("UICorner")
@@ -133,6 +129,8 @@ local function UpdateTitle(newTitle)
 end
 
 local buttonSpacing = 0.1
+
+
 
 local tabFolder = Instance.new("Folder")
 tabFolder.Name = "TabFolder"
@@ -203,37 +201,130 @@ local function newButton(buttonName)
     LoadBackground.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
     LoadBackground.BorderColor3 = Color3.new(0, 0, 0)
     LoadBackground.BorderSizePixel = 0
-    LoadBackground.Position = UDim2.new(0.192513362, 0, 0.505177379, 0)
-    LoadBackground.Size = UDim2.new(0, 113, 0, 37)
+    LoadBackground.Position = UDim2.new(0.133689836, 0, 0.702194333, 0)
+    LoadBackground.Size = UDim2.new(0, 136, 0, 38)
+
+    local LoadButton = Instance.new("TextButton")
+    LoadButton.Name = "LoadButton"
+    LoadButton.Parent = LoadBackground
+    LoadButton.BackgroundColor3 = Color3.new(0.815686, 0.831373, 0.905882)
+    LoadButton.BorderColor3 = Color3.new(0, 0, 0)
+    LoadButton.BorderSizePixel = 0
+    LoadButton.Position = UDim2.new(0.0354277678, 0, 0.0718761608, 0)
+    LoadButton.Size = UDim2.new(0, 127, 0, 34)
+    LoadButton.Font = Enum.Font.SourceSans
+    LoadButton.Text = "Load Script"
+    LoadButton.TextColor3 = Color3.new(0, 0, 0)
+    LoadButton.TextSize = 18
 
     local UICorner_10 = Instance.new("UICorner")
-    UICorner_10.Parent = LoadBackground
-
-    local Load = Instance.new("TextButton")
-    Load.Name = "Load"
-    Load.Parent = LoadBackground
-    Load.AnchorPoint = Vector2.new(0.5, 0.5)
-    Load.BackgroundColor3 = Color3.new(0.815686, 0.831373, 0.905882)
-    Load.BorderColor3 = Color3.new(0, 0, 0)
-    Load.BorderSizePixel = 0
-    Load.Position = UDim2.new(0.5, 0, 0.5, 0)
-    Load.Size = UDim2.new(0, 103, 0, 29)
-    Load.Font = Enum.Font.SourceSans
-    Load.Text = "Load"
-    Load.TextColor3 = Color3.new(0, 0, 0)
-    Load.TextSize = 18
-    Load.TextWrapped = true
+    UICorner_10.Parent = LoadButton
 
     local UICorner_11 = Instance.new("UICorner")
-    UICorner_11.Parent = Load
+    UICorner_11.Parent = LoadBackground
+
+    local CancelBackground = Instance.new("Frame")
+    CancelBackground.Name = "CancelBackground"
+    CancelBackground.Parent = tabFrame
+    CancelBackground.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
+    CancelBackground.BorderColor3 = Color3.new(0, 0, 0)
+    CancelBackground.BorderSizePixel = 0
+    CancelBackground.Position = UDim2.new(0.133689836, 0, 0.840125382, 0)
+    CancelBackground.Size = UDim2.new(0, 136, 0, 38)
+
+    local CancelButton = Instance.new("TextButton")
+    CancelButton.Name = "CancelButton"
+    CancelButton.Parent = CancelBackground
+    CancelButton.BackgroundColor3 = Color3.new(0.537255, 0.545098, 0.596078)
+    CancelButton.BorderColor3 = Color3.new(0, 0, 0)
+    CancelButton.BorderSizePixel = 0
+    CancelButton.Position = UDim2.new(0.0354277678, 0, 0.0718761608, 0)
+    CancelButton.Size = UDim2.new(0, 127, 0, 34)
+    CancelButton.Font = Enum.Font.SourceSans
+    CancelButton.Text = "Close Window"
+    CancelButton.TextColor3 = Color3.new(0, 0, 0)
+    CancelButton.TextSize = 18
+
+    local UICorner_12 = Instance.new("UICorner")
+    UICorner_12.Parent = CancelButton
+
+    local UICorner_13 = Instance.new("UICorner")
+    UICorner_13.Parent = CancelBackground
+
+    local GameTitle = Instance.new("TextLabel")
+    GameTitle.Name = "GameTitle"
+    GameTitle.Parent = tabFrame
+    GameTitle.BackgroundColor3 = Color3.new(1, 1, 1)
+    GameTitle.BackgroundTransparency = 1
+    GameTitle.BorderColor3 = Color3.new(0, 0, 0)
+    GameTitle.BorderSizePixel = 0
+    GameTitle.Position = UDim2.new(0.0320855603, 0, 0.432601869, 0)
+    GameTitle.Size = UDim2.new(0, 174, 0, 28)
+    GameTitle.Font = Enum.Font.SourceSansItalic
+    GameTitle.Text = "Game Title"
+    GameTitle.TextColor3 = Color3.new(1, 1, 1)
+    GameTitle.TextSize = 16
+
+    local GameId = Instance.new("TextLabel")
+    GameId.Name = "GameId"
+    GameId.Parent = tabFrame
+    GameId.BackgroundColor3 = Color3.new(1, 1, 1)
+    GameId.BackgroundTransparency = 1
+    GameId.BorderColor3 = Color3.new(0, 0, 0)
+    GameId.BorderSizePixel = 0
+    GameId.Position = UDim2.new(0.0320855603, 0, 0.489028215, 0)
+    GameId.Size = UDim2.new(0, 174, 0, 28)
+    GameId.Font = Enum.Font.SourceSansItalic
+    GameId.Text = "Game ID"
+    GameId.TextColor3 = Color3.new(1, 1, 1)
+    GameId.TextSize = 14
+
+    local LatestUpdate = Instance.new("TextLabel")
+    LatestUpdate.Name = "LatestUpdate"
+    LatestUpdate.Parent = tabFrame
+    LatestUpdate.BackgroundColor3 = Color3.new(1, 1, 1)
+    LatestUpdate.BackgroundTransparency = 1
+    LatestUpdate.BorderColor3 = Color3.new(0, 0, 0)
+    LatestUpdate.BorderSizePixel = 0
+    LatestUpdate.Position = UDim2.new(0.0213903747, 0, 0.576802492, 0)
+    LatestUpdate.Size = UDim2.new(0, 174, 0, 28)
+    LatestUpdate.Font = Enum.Font.SourceSansItalic
+    LatestUpdate.Text = "Update : Date"
+    LatestUpdate.TextColor3 = Color3.new(1, 1, 1)
+    LatestUpdate.TextSize = 16
+
+    local function setRandomImage(id)
+        RandomImage.Image = "rbxthumb://type=Asset&id=" .. id .. "&w=150&h=150"
+    end
+
+    button.MouseButton1Click:Connect(function()
+        for _, tab in pairs(tabFolder:GetChildren()) do
+            if tab:IsA("Frame") then
+                tab.Visible = false
+            end
+        end
+
+        tabFrame.Visible = true
+    end)
+
+    CancelButton.MouseButton1Click:Connect(function()
+        tabFrame.Visible = false
+    end)
+
+    return {
+        GameTitle = function(title) GameTitle.Text = title end,
+        GameId = function(id) GameId.Text = id end,
+        LatestUpdate = function(update) LatestUpdate.Text = "Update : " .. update end,
+        LoadButton = function(callback) LoadButton.MouseButton1Click:Connect(callback) end,
+        CancelButton = function(callback)
+            CancelButton.MouseButton1Click:Connect(function()
+                callback()
+                tabFrame.Visible = false
+            end)
+        end,
+        RandomImage = setRandomImage
+    }
 end
-
-return {
-    lib = lib,
-    newButton = newButton,
-    UpdateTitle = UpdateTitle,
-}
-
 
 local function positionButtons()
     local yOffset = 0
@@ -463,6 +554,30 @@ local function UpdateCline2(text)
         Cline2.Text = text
     end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function calculateDaysDifference(date1, date2)
     local diff = os.difftime(os.time(date2), os.time(date1))
