@@ -139,7 +139,7 @@ tabFolder.Parent = Main
 local function newButton(buttonName)
     local button = Instance.new("TextButton")
     button.Name = buttonName
-    button.Parent = GamesHolder  -- Ensure GamesHolder is defined
+    button.Parent = GamesHolder  -- Sicherstellen, dass GamesHolder definiert ist
     button.BackgroundColor3 = Color3.new(0.815686, 0.831373, 0.905882)
     button.BorderColor3 = Color3.new(0, 0, 0)
     button.BorderSizePixel = 0
@@ -158,7 +158,7 @@ local function newButton(buttonName)
 
     local tabFrame = Instance.new("Frame")
     tabFrame.Name = buttonName
-    tabFrame.Parent = tabFolder  -- Ensure tabFolder is defined
+    tabFrame.Parent = tabFolder  -- Sicherstellen, dass tabFolder definiert ist
     tabFrame.AnchorPoint = Vector2.new(0.5, 0.5)
     tabFrame.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
     tabFrame.BorderSizePixel = 0
@@ -169,7 +169,7 @@ local function newButton(buttonName)
     local UICorner_7 = Instance.new("UICorner")
     UICorner_7.Parent = tabFrame
 
-    -- Create RandomImageBackground
+    -- Erstellen des RandomImageBackground
     local RandomImageBackground = Instance.new("Frame")
     RandomImageBackground.Name = "RandomImageBackground"
     RandomImageBackground.Parent = tabFrame
@@ -193,7 +193,7 @@ local function newButton(buttonName)
     local UICorner_8 = Instance.new("UICorner")
     UICorner_8.Parent = RandomImage
 
-    -- Create Load and Cancel buttons
+    -- Erstellen der Load- und Cancel-Buttons
     local LoadBackground = Instance.new("Frame")
     LoadBackground.Name = "LoadBackground"
     LoadBackground.Parent = tabFrame
@@ -244,7 +244,7 @@ local function newButton(buttonName)
     local UICorner_12 = Instance.new("UICorner")
     UICorner_12.Parent = CancelButton
 
-    -- Create labels for game title, ID, and latest update
+    -- Erstellen von Labels für Spieltitel, ID und letzte Aktualisierung
     local GameTitle = Instance.new("TextLabel")
     GameTitle.Name = "GameTitle"
     GameTitle.Parent = tabFrame
@@ -304,7 +304,7 @@ local function newButton(buttonName)
         tabFrame.Visible = false
     end)
 
-    -- Return a table of functions to interact with the created elements
+    -- Rückgabe einer Tabelle von Funktionen, um mit den erstellten Elementen zu interagieren
     return {
         GameTitle = function(title) GameTitle.Text = title end,
         GameId = function(id) GameId.Text = id end,
@@ -317,13 +317,14 @@ local function newButton(buttonName)
             end)
         end,
         RandomImage = setRandomImage,
-        ButtonInstance = button -- Return the button instance if needed
+        ButtonInstance = button  -- Rückgabe der Button-Instanz, falls benötigt
     }
 end
 
 return {
     newButton = newButton,
 }
+
 
 local SearchBox = Instance.new("Frame")
 local SearchBar = Instance.new("TextBox")
